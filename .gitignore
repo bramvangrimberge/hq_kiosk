@@ -49,10 +49,6 @@ fabric.properties
 .idea/kiosk.iml
 .idea/misc.xml
 .idea/modules.xml
-assets/
-composer.json
 composer.lock
-css/
-index.php
-js/
 vendor/
+.idea/
