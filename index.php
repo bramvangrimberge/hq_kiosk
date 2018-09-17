@@ -28,6 +28,16 @@ try {
 $graphNode = $response->getGraphNode();
 $json = json_decode($graphNode->asJson());
 
+//filter to show only new events
+$filteredEvents = array();
+
+foreach($json->events as $event) {
+    $time = strtotime($event->start_time->date);
+    if($time > time()) {
+        array_push($filteredEvents, $event);
+    }
+}
+
 ?>
 
 <html>
@@ -60,7 +70,7 @@ $json = json_decode($graphNode->asJson());
             </div>
             <div class="mdl-cell mdl-cell--12-col mdl-cell--stretch slide-content">
                <ul>
-                <?php foreach($json->events as $event): ?>
+                <?php foreach($filteredEvents as $event): ?>
                    <li><?php echo $event->name ?></li>
                 <?php endforeach; ?>
                </ul>
