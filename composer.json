@@ -8,5 +8,8 @@
       "name": "Bram Van Grimberge",
       "email": "bvg@taxistop.be"
     }
-  ]
+  ],
+  "autoload": {
+      "psr-4": {"Bram\\": "src/"}
+  }
 }

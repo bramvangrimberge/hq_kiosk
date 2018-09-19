@@ -1,42 +1,16 @@
 <?php
 
-use Facebook\Exceptions\FacebookResponseException;
-use Facebook\Exceptions\FacebookSDKException;
-use Facebook\Facebook;
-
 require_once 'vendor/autoload.php';
 
-$fb = new Facebook([
-    'app_id' => '2165962120350688',
-    'app_secret' => '94a9fa41a3fd338787f5454359cb9e24',
-    'default_graph_version' => 'v3.1',
-]);
+$db = new \Bram\DBConnection();
+$connection = $db->getConnection();
 
-try {
-    // Returns a `FacebookFacebookResponse` object
-    $response = $fb->get(
-        '/me?fields=events',
-        'EAAex7lrHyZBABALHJPkLjKX76Xt1v5DYp0GMLdGBOHKaue6lpvZCVZBs6VFzYti6OKT9qcH86UZA5UTXebyct38HjFaOOAZA9UdZCreJdpSQCbNZCDZBd67MwV5gYibOce9HDaSGwJiZCNJoFuZBMkNyPZByiWMtj3QtJOwaTOV8MQ2YfkdlHeBmP1ByfLMrBUtSjIZD'
-    );
-} catch (FacebookResponseException $e) {
-    echo 'Graph returned an error: ' . $e->getMessage();
-    exit;
-} catch (FacebookSDKException $e) {
-    echo 'Facebook SDK returned an error: ' . $e->getMessage();
-    exit;
-}
-$graphNode = $response->getGraphNode();
-$json = json_decode($graphNode->asJson());
-
-//filter to show only new events
-$filteredEvents = array();
-
-foreach($json->events as $event) {
-    $time = strtotime($event->start_time->date);
-    if($time > time()) {
-        array_push($filteredEvents, $event);
-    }
-}
+//foreach($json->events as $event) {
+//    $time = strtotime($event->start_time->date);
+//    if($time > time()) {
+//        array_push($filteredEvents, $event);
+//    }
+//}
 
 ?>
 
@@ -69,11 +43,11 @@ foreach($json->events as $event) {
                 <h1>Evenementen</h1>
             </div>
             <div class="mdl-cell mdl-cell--12-col mdl-cell--stretch slide-content">
-               <ul>
-                <?php foreach($filteredEvents as $event): ?>
-                   <li><?php echo $event->name ?></li>
-                <?php endforeach; ?>
-               </ul>
+<!--               <ul>-->
+<!--                --><?php //foreach($filteredEvents as $event): ?>
+<!--                   <li>--><?php //echo $event->name ?><!--</li>-->
+<!--                --><?php //endforeach; ?>
+<!--               </ul>-->
             </div>
         </div>
     </div>
