@@ -26,3 +26,9 @@
 	background-color:lightgrey;
 
 }
+
+/** Events **/
+
+.fullwidth {
+    width: 100%;
+}

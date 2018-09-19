@@ -7,6 +7,8 @@ require_once '../../vendor/autoload.php';
     <link rel="stylesheet" href="../../css/material.min.css">
     <script src="../../js/material.min.js"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <link rel="stylesheet" href="../../css/custom.css">
 </head>
 <body>
     <!-- Always shows a header, even in smaller screens. -->
