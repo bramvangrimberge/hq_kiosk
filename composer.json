@@ -10,6 +10,9 @@
     }
   ],
   "autoload": {
-      "psr-4": {"Bram\\": "src/"}
+      "psr-4": {
+        "Bram\\": "src/",
+        "Bram\\Model\\": "src/Model"
+      }
   }
 }

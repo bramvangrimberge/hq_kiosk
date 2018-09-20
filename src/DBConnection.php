@@ -1,6 +1,8 @@
 <?php
 
 namespace Bram;
+
+use Bram\Model\Event;
 use PDO;
 use PDOException;
 
@@ -16,6 +18,9 @@ class DBConnection
 
     public function __construct(){}
 
+    /**
+     * @return PDO
+     */
     public function getConnection() {
         if($this->connection == null) {
             $this->makeDbConnection();
@@ -40,4 +45,18 @@ class DBConnection
         }
     }
 
+
+    public function getActiveEvents() {
+        $events = array();
+
+        $dbConnection = $this->getConnection();
+        $query = $dbConnection->query("select * from event");
+
+        while($row = $query->fetch()) {
+            $event = new Event($row);
+            array_push($events, $event);
+        }
+
+        return $events;
+    }
 }
