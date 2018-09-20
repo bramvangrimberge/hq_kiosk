@@ -1,3 +1,2 @@
-        </div>
-    </main>
+    </div>
 </div>

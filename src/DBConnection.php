@@ -17,13 +17,31 @@ class DBConnection
 {
     private $connection = null;
 
-    public function __construct(){}
+    public function __construct()
+    {
+    }
+
+    public function getActiveEvents()
+    {
+        $events = array();
+
+        $dbConnection = $this->getConnection();
+        $query = $dbConnection->query("select * from event");
+
+        while ($row = $query->fetch()) {
+            $event = new Event($row);
+            array_push($events, $event);
+        }
+
+        return $events;
+    }
 
     /**
      * @return PDO
      */
-    public function getConnection() {
-        if($this->connection == null) {
+    public function getConnection()
+    {
+        if ($this->connection == null) {
             $this->makeDbConnection();
         }
         return $this->connection;
@@ -46,22 +64,8 @@ class DBConnection
         }
     }
 
-
-    public function getActiveEvents() {
-        $events = array();
-
-        $dbConnection = $this->getConnection();
-        $query = $dbConnection->query("select * from event");
-
-        while($row = $query->fetch()) {
-            $event = new Event($row);
-            array_push($events, $event);
-        }
-
-        return $events;
-    }
-
-    public function getCategoryById($categoryId) {
+    public function getCategoryById($categoryId)
+    {
         $dbConnection = $this->getConnection();
         $query = $dbConnection->query("select * from category where category_id = " . $categoryId);
 
@@ -70,5 +74,19 @@ class DBConnection
         return $category;
     }
 
+    public function getCategories()
+    {
+        $categories = array();
+
+        $dbConnection = $this->getConnection();
+        $query = $dbConnection->query("select * from category");
+
+        while ($row = $query->fetch()) {
+            $category = new Category($row);
+            array_push($categories, $category);
+        }
+
+        return $categories;
+    }
 
 }
