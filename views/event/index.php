@@ -18,24 +18,21 @@ var_dump($events);
         <table class="mdl-data-table mdl-shadow--2dp fullwidth">
             <thead>
             <tr>
-<!--                class="mdl-data-table__cell--non-numeric"-->
                 <th>Id</th>
-                <th>Title</th>
-                <th>Categorie</th>
-<!--                <th>Beschrijving</th>-->
-                <th>Startdatum</th>
-                <th>Aparte slide</th>
+                <th class="mdl-data-table__cell--non-numeric">Title</th>
+                <th class="mdl-data-table__cell--non-numeric">Categorie</th>
+                <th class="mdl-data-table__cell--non-numeric">Startdatum</th>
+                <th class="mdl-data-table__cell--non-numeric">Aparte slide</th>
             </tr>
             </thead>
             <tbody>
             <?php foreach ($events as $event): ?>
                 <tr>
                     <td><?php echo $event->getEventId(); ?></td>
-                    <td><?php echo $event->getTitle(); ?></td>
-                    <td><?php echo $event->getCategoryId(); ?></td>
-<!--                    <td>--><?php //echo $event->getLongDesc(); ?><!--</td>-->
-                    <td><?php echo $event->getStartDate(); ?></td>
-                    <td><?php echo $event->getShowSeperate(); ?></td>
+                    <td class="mdl-data-table__cell--non-numeric"><?php echo $event->getTitle(); ?></td>
+                    <td class="mdl-data-table__cell--non-numeric"><?php echo $event->getCategory()->getDescription(); ?></td>
+                    <td class="mdl-data-table__cell--non-numeric"><?php echo $event->getStartDate(); ?></td>
+                    <td class="mdl-data-table__cell--non-numeric"><?php echo $event->getShowSeperate()?'Ja':'nee'; ?></td>
                 </tr>
             <?php endforeach; ?>
             </tbody>

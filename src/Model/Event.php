@@ -9,9 +9,11 @@
 namespace Bram\Model;
 
 
+use Bram\DBConnection;
+
 class Event
 {
-    private $categoryId;
+    private $category;
     private $eventId;
     private $longDesc;
     private $showSeperate;
@@ -20,8 +22,10 @@ class Event
 
     public function __construct($row)
     {
-        $this->categoryId = isset($row['category_id']) ? $row['category_id'] : null;
+        $dbConnection = new DBConnection();
+
         $this->eventId = isset($row['event_id']) ? $row['event_id'] : null;
+        $this->category = isset($row['category_id']) ? $dbConnection->getCategoryById($row['category_id']) : null;
         $this->longDesc = isset($row['long_desc']) ? $row['long_desc'] : '';
         $this->showSeperate = isset($row['show_seperate']) ? $row['show_seperate'] : false;
         $this->startDate = isset($row['start_date']) ? $row['start_date'] : date('now');
@@ -29,19 +33,19 @@ class Event
     }
 
     /**
-     * @return mixed
+     * @return null
      */
-    public function getCategoryId()
+    public function getCategory()
     {
-        return $this->categoryId;
+        return $this->category;
     }
 
     /**
-     * @param mixed $categoryId
+     * @param null $category
      */
-    public function setCategoryId($categoryId)
+    public function setCategory($category)
     {
-        $this->categoryId = $categoryId;
+        $this->category = $category;
     }
 
     /**

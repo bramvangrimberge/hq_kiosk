@@ -2,6 +2,7 @@
 
 namespace Bram;
 
+use Bram\Model\Category;
 use Bram\Model\Event;
 use PDO;
 use PDOException;
@@ -59,4 +60,15 @@ class DBConnection
 
         return $events;
     }
+
+    public function getCategoryById($categoryId) {
+        $dbConnection = $this->getConnection();
+        $query = $dbConnection->query("select * from category where category_id = " . $categoryId);
+
+        $category = new Category($query->fetch());
+
+        return $category;
+    }
+
+
 }
