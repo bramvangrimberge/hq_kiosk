@@ -13,11 +13,13 @@ use Bram\DBConnection;
 
 class Event
 {
-    private $category;
     private $eventId;
+    private $categoryId;
+    private $category;
     private $longDesc;
     private $showSeperate;
     private $startDate;
+    private $startHour;
     private $title;
 
     public function __construct($row)
@@ -25,6 +27,7 @@ class Event
         $dbConnection = new DBConnection();
 
         $this->eventId = isset($row['event_id']) ? $row['event_id'] : null;
+        $this->categoryId = isset($row['category_id']) ?$row['category_id'] : null;
         $this->category = isset($row['category_id']) ? $dbConnection->getCategoryById($row['category_id']) : null;
         $this->longDesc = isset($row['long_desc']) ? $row['long_desc'] : '';
         $this->showSeperate = isset($row['show_seperate']) ? $row['show_seperate'] : false;
@@ -33,7 +36,24 @@ class Event
     }
 
     /**
-     * @return null
+     * @return mixed
+     */
+    public function getCategoryId()
+    {
+        return $this->categoryId;
+    }
+
+    /**
+     * @param mixed $categoryId
+     */
+    public function setCategoryId($categoryId)
+    {
+        $this->categoryId = $categoryId;
+    }
+
+
+    /**
+     * @return Category
      */
     public function getCategory()
     {

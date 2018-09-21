@@ -88,5 +88,4 @@ class DBConnection
 
         return $categories;
     }
-
 }
