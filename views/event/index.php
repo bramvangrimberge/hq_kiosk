@@ -19,6 +19,7 @@ $events = $service->getActiveEvents();
             <th scope="col">Categorie</th>
             <th scope="col">Startdatum</th>
             <th scope="col">Aparte slide</th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -29,6 +30,7 @@ $events = $service->getActiveEvents();
                 <td><?php echo $event->getCategory()->getDescription(); ?></td>
                 <td><?php echo $event->getStartDate(); ?></td>
                 <td><?php echo $event->getShowSeperate() ? 'Ja' : 'nee'; ?></td>
+                <td><a href="./../event/form.php?edit=<?php echo $event->getEventId()?>" class="btn btn-secondary btn-block btn-sm">Edit</a></td>
             </tr>
         <?php endforeach; ?>
         </tbody>

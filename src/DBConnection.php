@@ -64,6 +64,16 @@ class DBConnection
         }
     }
 
+    public function getEventById($eventId)
+    {
+        $dbConnection = $this->getConnection();
+        $query = $dbConnection->query("select * from event where event_id = " . $eventId);
+
+        $event = new Event($query->fetch());
+
+        return $event;
+    }
+
     public function getCategoryById($categoryId)
     {
         $dbConnection = $this->getConnection();

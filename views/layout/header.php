@@ -22,7 +22,7 @@ require_once '../../vendor/autoload.php';
                 <a class="nav-link" href="<?php echo './../event/index.php' ?>">Evenementen</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="<?php echo './../event/create.php' ?>">Nieuw evenement</a>
+                <a class="nav-link" href="<?php echo './../event/form.php' ?>">Nieuw evenement</a>
             </li>
         </ul>
     </div>

@@ -4,15 +4,22 @@ $db = new \Bram\DBConnection();
 $categories = $db->getCategories();
 $minutes = \Bram\Utils\DateUtils::getMinutes();
 $hours = \Bram\Utils\DateUtils::getHours();
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+$event = new \Bram\Model\Event();
+$mode = 'create';
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    if (isset($_GET['edit'])) {
+        $mode = 'edit';
+        $id = $_GET['edit'];
+        $event = $db->getEventById($id);
+    }
+} else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $valid = true;
 
-    if(empty($_POST['eventTitle'])) {
+    if (empty($_POST['eventTitle'])) {
         $valid = false;
     }
 
-    if(!$valid) {
+    if (!$valid) {
         echo 'Correct errors';
     }
 }
@@ -28,7 +35,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form method="post">
             <div class="form-group">
                 <label for="eventTitle">Titel</label>
-                <input type="text" class="form-control" id="eventTitle" name="eventTitle">
+                <input type="text" class="form-control" id="eventTitle" name="eventTitle"
+                       value="<?php echo $event->getTitle() ?>">
             </div>
             <div class="form-group">
                 <label for="eventCategory">Categorie</label>
@@ -43,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="form-group">
                 <label for="startDate">Startdatum</label>
                 <input type="date" id="startDate" name="startDate" max="2100-12-31"
-                       min="2000-01-01" class="form-control">
+                       min="2000-01-01" class="form-control" value="<?php $event->getStartDate() ?>">
             </div>
             <div class="row">
                 <div class="col-6">
@@ -69,15 +77,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="form-group">
                 <label for="eventDescription">Beschrijving</label>
-                <textarea class="form-control" id="eventDescription" name="eventDescription" rows="3"></textarea>
+                <textarea class="form-control" id="eventDescription" name="eventDescription"
+                          rows="3"><?php echo $event->getLongDesc() ?></textarea>
             </div>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="eventShowSeperate" name="eventShowSeperate">
+                <input class="form-check-input" type="checkbox" value="" id="eventShowSeperate"
+                       name="eventShowSeperate" <?php echo $event->getShowSeperate() ? 'checked' : '' ?>>
                 <label class="form-check-label" for="eventShowSeperate">
                     Toon in aparte slide
                 </label>
             </div>
-            <button type="submit" class="btn btn-primary btn-lg btn-block mt-3">Toevoegen</button>
+            <?php if ($mode == 'edit') : ?>
+                <button type="submit" class="btn btn-primary btn-lg btn-block mt-3">Opslaan</button>
+            <?php endif ?>
+            <?php if ($mode == 'create') : ?>
+                <button type="submit" class="btn btn-primary btn-lg btn-block mt-3">Toevoegen</button>
+            <?php endif ?>
         </form>
     </div>
 </div>

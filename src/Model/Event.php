@@ -22,7 +22,8 @@ class Event
     private $startHour;
     private $title;
 
-    public function __construct($row)
+
+    public function __construct($row = null)
     {
         $dbConnection = new DBConnection();
 
