@@ -13,6 +13,7 @@ use Bram\DBConnection;
 
 class Event
 {
+    public static $dbFields = array('title', 'long_desc', 'show_seperate', 'category_id', 'start_date', 'start_hour');
     private $eventId;
     private $categoryId;
     private $category;
@@ -22,18 +23,31 @@ class Event
     private $startHour;
     private $title;
 
-
     public function __construct($row = null)
     {
         $dbConnection = new DBConnection();
 
         $this->eventId = isset($row['event_id']) ? $row['event_id'] : null;
-        $this->categoryId = isset($row['category_id']) ?$row['category_id'] : null;
+        $this->categoryId = isset($row['category_id']) ? $row['category_id'] : null;
         $this->category = isset($row['category_id']) ? $dbConnection->getCategoryById($row['category_id']) : null;
         $this->longDesc = isset($row['long_desc']) ? $row['long_desc'] : '';
         $this->showSeperate = isset($row['show_seperate']) ? $row['show_seperate'] : false;
-        $this->startDate = isset($row['start_date']) ? $row['start_date'] : date('now');
+        $this->startDate = isset($row['start_date']) ? $row['start_date'] : null;
+        $this->startHour = isset($row['start_hour']) ? $row['start_hour'] : '00:00';
         $this->title = isset($row['title']) ? $row['title'] : '';
+    }
+
+    public static function getDbFieldNames()
+    {
+        $fieldString = "";
+
+        foreach (Event::$dbFields as $key => $field) {
+            $fieldString .= $field;
+            if ($key < count(Event::$dbFields) - 1 ) {
+                $fieldString .= ',';
+            }
+        }
+        return $fieldString;
     }
 
     /**
@@ -51,7 +65,6 @@ class Event
     {
         $this->categoryId = $categoryId;
     }
-
 
     /**
      * @return Category
@@ -141,5 +154,29 @@ class Event
         $this->title = $title;
     }
 
+    public function getHour()
+    {
+        return explode(':', $this->getStartHour())[0];
+    }
 
+    /**
+     * @return mixed
+     */
+    public function getStartHour()
+    {
+        return $this->startHour;
+    }
+
+    /**
+     * @param mixed $startHour
+     */
+    public function setStartHour($startHour)
+    {
+        $this->startHour = $startHour;
+    }
+
+    public function getMinute()
+    {
+        return explode(':', $this->getStartHour())[1];
+    }
 }

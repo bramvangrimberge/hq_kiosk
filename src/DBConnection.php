@@ -76,6 +76,10 @@ class DBConnection
 
     public function getCategoryById($categoryId)
     {
+        if(empty($categoryId)) {
+            return null;
+        }
+
         $dbConnection = $this->getConnection();
         $query = $dbConnection->query("select * from category where category_id = " . $categoryId);
 
@@ -97,5 +101,22 @@ class DBConnection
         }
 
         return $categories;
+    }
+
+    /**
+     * @param $event Event
+     */
+    public function insertEvent($event) {
+        $dbConnection = $this->getConnection();
+
+        // 'title', 'long_desc', 'show_seperate', 'category_id', 'start_date', 'start_hour'
+        $valueString = $event->getTitle() . ', ' . $event->getLongDesc() . ',' . $event->getShowSeperate() . ',' . $event->getCategoryId() . $event->getStartDate() . ',' . $event->getStartHour();
+
+        $sql = "INSERT INTO event (" . Event::getDbFieldNames() . "') VALUES (" . $valueString . ")";
+        try {
+            $dbConnection->exec($sql);
+        } catch(PDOException $exception) {
+            echo 'SQL exception : ' . $exception->getMessage();
+        }
     }
 }
