@@ -110,9 +110,11 @@ class DBConnection
         $dbConnection = $this->getConnection();
 
         // 'title', 'long_desc', 'show_seperate', 'category_id', 'start_date', 'start_hour'
-        $valueString = $event->getTitle() . ', ' . $event->getLongDesc() . ',' . $event->getShowSeperate() . ',' . $event->getCategoryId() . $event->getStartDate() . ',' . $event->getStartHour();
+        $valueString = "'" . $event->getTitle() . "'" . ',' . "'" . $event->getLongDesc() . "'" . ',' . "'" . $event->getShowSeperate() . "'" . ',' . $event->getCategoryId() . ',' . "'" . $event->getStartDate() . "'" . ',' . "'" . $event->getStartHour() . "'";
 
-        $sql = "INSERT INTO event (" . Event::getDbFieldNames() . "') VALUES (" . $valueString . ")";
+        $sql = "INSERT INTO event (" . Event::getDbFieldNames() . ") VALUES (" . $valueString . ")";
+
+
         try {
             $dbConnection->exec($sql);
         } catch(PDOException $exception) {
