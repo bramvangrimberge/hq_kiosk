@@ -5,9 +5,9 @@
 $service = new \Bram\DBConnection();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $eventId = !empty($_POST['deleteEvent'])?$_POST['deleteEvent']:null;
+    $eventId = !empty($_POST['deleteEvent']) ? $_POST['deleteEvent'] : null;
 
-    if($eventId != null) {
+    if ($eventId != null) {
         $service->deleteEvent($eventId);
     }
 }
@@ -20,6 +20,10 @@ $events = $service->getActiveEvents();
     <h3>Overzicht evenementen</h3>
 </div>
 <div class="row">
+
+    <?php if (count($events) <= 0): ?>
+        Geen evenementen gevonden
+    <?php else: ?>
     <table class="table table-hover">
         <thead>
         <tr>
@@ -43,12 +47,15 @@ $events = $service->getActiveEvents();
                     <div class="btn-toolbar" role="toolbar">
                         <div class="btn-group mr-2" role="group">
                             <a type="button" href="./../event/form.php?edit=<?php echo $event->getEventId() ?>"
-                               title="Wijzigen" class="btn btn-secondary btn-block btn-sm"><i class="material-icons">edit</i></a>
+                               title="Wijzigen" class="btn btn-secondary btn-block btn-sm"><i
+                                    class="material-icons">edit</i></a>
                         </div>
                         <div class="btn-group" role="group">
                             <a href=""
-                               title="Verwijderen" class="btn btn-danger btn-block btn-sm delete-event" data-toggle="modal"
-                               data-target="#deleteModal" id="modal-call" data-event-id="<?php echo $event->getEventId() ?>"><i
+                               title="Verwijderen" class="btn btn-danger btn-block btn-sm delete-event"
+                               data-toggle="modal"
+                               data-target="#deleteModal" id="modal-call"
+                               data-event-id="<?php echo $event->getEventId() ?>"><i
                                     class="material-icons">delete</i></a>
                         </div>
                     </div>
@@ -56,6 +63,8 @@ $events = $service->getActiveEvents();
             </tr>
         <?php endforeach; ?>
         </tbody>
+        <?php endif; ?>
+
     </table>
 </div>
 
@@ -81,7 +90,7 @@ $events = $service->getActiveEvents();
                             </button>
                         </div>
                     </div>
-                    <input type="hidden" name="deleteEvent" id="deleteEvent" value="0">
+                    <input type="hidden" name="deleteEvent" id="deleteEvent">
                 </form>
             </div>
         </div>
@@ -89,8 +98,8 @@ $events = $service->getActiveEvents();
 </div>
 
 <script>
-    $(document).ready(function() {
-        $('.delete-event').click(function(){
+    $(document).ready(function () {
+        $('.delete-event').click(function () {
             var eventId = $(this).data('event-id');
             $('#deleteEvent').val(eventId);
         });
