@@ -22,7 +22,7 @@ $events = $service->getActiveEvents();
 <div class="row">
 
     <?php if (count($events) <= 0): ?>
-        Geen evenementen gevonden
+        <div class="alert alert-info fullwidth text-center"> Geen evenementen gevonden</div>
     <?php else: ?>
     <table class="table table-hover">
         <thead>
