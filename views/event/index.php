@@ -23,9 +23,9 @@ $events = $service->getActiveEvents();
         </tr>
         </thead>
         <tbody>
-        <?php foreach ($events as $event): ?>
-            <tr>
-                <td scope="row"><?php echo $event->getEventId(); ?></td>
+        <?php foreach ($events as $key => $event): ?>
+            <tr style="cursor:pointer" onclick="document.location = './../event/form.php?edit=<?php echo $event->getEventId() ?>';">
+                <td scope="row"><?php echo $key+1 ?></td>
                 <td><?php echo $event->getTitle(); ?></td>
                 <td><?php echo $event->getCategory()->getDescription(); ?></td>
                 <td><?php echo $event->getStartDate(); ?></td>
