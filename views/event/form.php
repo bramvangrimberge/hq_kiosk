@@ -50,6 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
     if ($valid) {
         $db->saveOrUpdate($event);
+        header('Location: index.php');
     }
 }
 
