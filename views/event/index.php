@@ -24,26 +24,55 @@ $events = $service->getActiveEvents();
         </thead>
         <tbody>
         <?php foreach ($events as $key => $event): ?>
-            <tr style="cursor:pointer" onclick="document.location = './../event/form.php?edit=<?php echo $event->getEventId() ?>';">
-                <td scope="row"><?php echo $key+1 ?></td>
+            <tr>
+                <td scope="row"><?php echo $key + 1 ?></td>
                 <td><?php echo $event->getTitle(); ?></td>
                 <td><?php echo $event->getCategory()->getDescription(); ?></td>
                 <td><?php echo $event->getStartDate(); ?></td>
                 <td><?php echo $event->getShowSeperate() ? 'Ja' : 'nee'; ?></td>
                 <td>
                     <div class="btn-toolbar" role="toolbar">
-                      <div class="btn-group mr-2" role="group">
-                        <a type="button" href="./../event/form.php?edit=<?php echo $event->getEventId() ?>" title="Wijzigen" class="btn btn-secondary btn-block btn-sm"><i class="material-icons">edit</i></a>
-                      </div>
-                      <div class="btn-group" role="group">
-                        <a type="button" href="./../event/form.php?delete=<?php echo $event->getEventId() ?>" title="Verwijderen" class="btn btn-danger btn-block btn-sm"><i class="material-icons">delete</i></a>
-                      </div>
+                        <div class="btn-group mr-2" role="group">
+                            <a type="button" href="./../event/form.php?edit=<?php echo $event->getEventId() ?>"
+                               title="Wijzigen" class="btn btn-secondary btn-block btn-sm"><i class="material-icons">edit</i></a>
+                        </div>
+                        <div class="btn-group" role="group">
+                            <a type="button" href="./../event/form.php?delete=<?php echo $event->getEventId() ?>"
+                               title="Verwijderen" class="btn btn-danger btn-block btn-sm" data-toggle="modal"
+                               data-target="#deleteModal"><i class="material-icons">delete</i></a>
+                        </div>
                     </div>
                 </td>
             </tr>
         <?php endforeach; ?>
         </tbody>
     </table>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="deleteModal" tabindex="-1" role="dialog"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        Wilt u dit evenement verwijderen?
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-6">
+                        <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Neen</button>
+                    </div>
+                    <div class="col-6">
+                        <button type="button" class="btn btn-danger btn-block" data-dismiss="modal">Ja, ik ben
+                            zeker
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <?php require_once '../layout/footer.php'; ?>

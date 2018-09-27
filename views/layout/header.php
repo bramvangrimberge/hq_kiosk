@@ -4,10 +4,11 @@ require_once '../../vendor/autoload.php';
 
 <html>
 <head>
-    <script src="../../js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../../css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/custom.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="../../js/jquery-3.3.1.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -32,5 +33,5 @@ require_once '../../vendor/autoload.php';
 <div class="container-fluid">
     <div class="p-3">
 
-    <!-- Your content goes here -->
+    <!-- content -->
 
