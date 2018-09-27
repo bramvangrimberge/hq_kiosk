@@ -76,7 +76,7 @@ class DBConnection
 
     public function getCategoryById($categoryId)
     {
-        if(empty($categoryId)) {
+        if (empty($categoryId)) {
             return null;
         }
 
@@ -106,18 +106,30 @@ class DBConnection
     /**
      * @param $event Event
      */
-    public function insertEvent($event) {
+    public function saveOrUpdate($event)
+    {
         $dbConnection = $this->getConnection();
+        $sql = "";
 
-        // 'title', 'long_desc', 'show_seperate', 'category_id', 'start_date', 'start_hour'
-        $valueString = "'" . $event->getTitle() . "'" . ',' . "'" . $event->getLongDesc() . "'" . ',' . "'" . $event->getShowSeperate() . "'" . ',' . $event->getCategoryId() . ',' . "'" . $event->getStartDate() . "'" . ',' . "'" . $event->getStartHour() . "'";
+        //insert new record
+        if (empty($event->getEventId())) {
+            // 'title', 'long_desc', 'show_seperate', 'category_id', 'start_date', 'start_hour'
+            $valueString = "'" . $event->getTitle() . "'" . ',' . "'" . $event->getLongDesc() . "'" . ',' . "'" . $event->getShowSeperate() . "'" . ',' . $event->getCategoryId() . ',' . "'" . $event->getStartDate() . "'" . ',' . "'" . $event->getStartHour() . "'";
+            $sql = "INSERT INTO event (" . Event::getDbFieldNames() . ") VALUES (" . $valueString . ")";
 
-        $sql = "INSERT INTO event (" . Event::getDbFieldNames() . ") VALUES (" . $valueString . ")";
-
+        } else {
+            $sql = "UPDATE event SET title='" . $event->getTitle() . "',";
+            $sql .= "long_desc='" . $event->getLongDesc() . "',";
+            $sql .= "show_seperate='" . $event->getShowSeperate() . "',";
+            $sql .= "category_id='" . $event->getCategoryId() . "',";
+            $sql .= "start_date='" . $event->getStartDate() . "',";
+            $sql .= "start_hour='" . $event->getStartHour() . "'";
+            $sql .= " WHERE event_id=" . $event->getEventId();
+        }
 
         try {
             $dbConnection->exec($sql);
-        } catch(PDOException $exception) {
+        } catch (PDOException $exception) {
             echo 'SQL exception : ' . $exception->getMessage();
         }
     }

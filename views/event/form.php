@@ -5,12 +5,10 @@ $categories = $db->getCategories();
 $minutes = \Bram\Utils\DateUtils::getMinutes();
 $hours = \Bram\Utils\DateUtils::getHours();
 $event = new \Bram\Model\Event();
-$mode = 'create';
 $errors = array();
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if (isset($_GET['edit'])) {
-        $mode = 'edit';
         $id = $_GET['edit'];
         $event = $db->getEventById($id);
     }
@@ -22,6 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
 
     $params = array(
+        'event_id' => !empty($_POST['eventId'])?$_POST['eventId']:null,
         'long_desc' => !empty($_POST['eventDescription'])?$_POST['eventDescription']:"",
         'category_id' => !empty($_POST['categoryId'])?$_POST['categoryId']:null,
         'show_seperate' => !empty($_POST['eventShowSeperate'])?$_POST['eventShowSeperate']:false,
@@ -50,19 +49,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     }
 
     if($valid) {
-        $db->insertEvent($event);
+        $db->saveOrUpdate($event);
     }
 }
+
+$mode = empty($event->getEventId())?'create':'edit';
 
 ?>
 
 
+
+
 <div class="row">
-    <h3>Evenement aanmaken</h3>
+    <h3>Evenement <?php echo $mode == 'edit'?'wijzigen':'aanmaken' ?></h3>
 </div>
 <div class="row">
     <div class="offset-lg-3 col-lg-6">
         <form method="post">
+
+            <input type="hidden" name="eventId" value="<?php echo $event->getEventId() ?>">
             <div class="form-group">
                 <label for="title">Titel *</label>
                 <input type="text" class="form-control <?php echo in_array('title', $errors)?'is-invalid':'' ?>" id="title" name="title"
