@@ -58,8 +58,6 @@ $mode = empty($event->getEventId())?'create':'edit';
 ?>
 
 
-
-
 <div class="row">
     <h3>Evenement <?php echo $mode == 'edit'?'wijzigen':'aanmaken' ?></h3>
 </div>
@@ -88,7 +86,7 @@ $mode = empty($event->getEventId())?'create':'edit';
             <div class="form-group">
                 <label for="startDate">Startdatum *</label>
                 <input type="date" id="startDate" name="startDate" max="2100-12-31"
-                       min="2000-01-01" class="form-control <?php echo in_array('startDate', $errors)?'is-invalid':'' ?>" value="<?php echo $event->getStartDate() ?>">
+                       min="<?php echo date("Y") ?>-01-01" class="form-control <?php echo in_array('startDate', $errors)?'is-invalid':'' ?>" value="<?php echo $event->getStartDate() ?>">
                 <div class="invalid-feedback">Verplicht veld</div>
             </div>
             <div class="row">
