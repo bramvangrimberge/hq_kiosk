@@ -11,7 +11,7 @@ $events = $service->getActiveEvents();
     <h3>Overzicht evenementen</h3>
 </div>
 <div class="row">
-    <table class="table">
+    <table class="table table-hover">
         <thead>
         <tr>
             <th>#</th>
@@ -30,7 +30,16 @@ $events = $service->getActiveEvents();
                 <td><?php echo $event->getCategory()->getDescription(); ?></td>
                 <td><?php echo $event->getStartDate(); ?></td>
                 <td><?php echo $event->getShowSeperate() ? 'Ja' : 'nee'; ?></td>
-                <td><a href="./../event/form.php?edit=<?php echo $event->getEventId()?>" class="btn btn-secondary btn-block btn-sm">Edit</a></td>
+                <td>
+                    <div class="btn-toolbar" role="toolbar">
+                      <div class="btn-group mr-2" role="group">
+                        <a type="button" href="./../event/form.php?edit=<?php echo $event->getEventId() ?>" title="Wijzigen" class="btn btn-secondary btn-block btn-sm"><i class="material-icons">edit</i></a>
+                      </div>
+                      <div class="btn-group" role="group">
+                        <a type="button" href="./../event/form.php?delete=<?php echo $event->getEventId() ?>" title="Verwijderen" class="btn btn-danger btn-block btn-sm"><i class="material-icons">delete</i></a>
+                      </div>
+                    </div>
+                </td>
             </tr>
         <?php endforeach; ?>
         </tbody>

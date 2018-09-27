@@ -7,6 +7,7 @@ require_once '../../vendor/autoload.php';
     <script src="../../js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../../css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/custom.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
 
