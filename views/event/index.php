@@ -3,8 +3,17 @@
 <?php
 
 $service = new \Bram\DBConnection();
-$events = $service->getActiveEvents();
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $eventId = !empty($_POST['deleteEvent'])?$_POST['deleteEvent']:null;
+
+    if($eventId != null) {
+        $service->deleteEvent($eventId);
+    }
+}
+
+//after delete event post to update the table
+$events = $service->getActiveEvents();
 ?>
 
 <div class="row">
@@ -37,9 +46,10 @@ $events = $service->getActiveEvents();
                                title="Wijzigen" class="btn btn-secondary btn-block btn-sm"><i class="material-icons">edit</i></a>
                         </div>
                         <div class="btn-group" role="group">
-                            <a type="button" href="./../event/form.php?delete=<?php echo $event->getEventId() ?>"
-                               title="Verwijderen" class="btn btn-danger btn-block btn-sm" data-toggle="modal"
-                               data-target="#deleteModal"><i class="material-icons">delete</i></a>
+                            <a href=""
+                               title="Verwijderen" class="btn btn-danger btn-block btn-sm delete-event" data-toggle="modal"
+                               data-target="#deleteModal" id="modal-call" data-event-id="<?php echo $event->getEventId() ?>"><i
+                                    class="material-icons">delete</i></a>
                         </div>
                     </div>
                 </td>
@@ -60,20 +70,32 @@ $events = $service->getActiveEvents();
                         Wilt u dit evenement verwijderen?
                     </div>
                 </div>
-                <div class="row mt-3">
-                    <div class="col-6">
-                        <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Neen</button>
+                <form method="post">
+                    <div class="row mt-3">
+                        <div class="col-6">
+                            <button type="button" class="btn btn-secondary btn-block" data-dismiss="modal">Neen</button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-danger btn-block">Ja, ik ben
+                                zeker
+                            </button>
+                        </div>
                     </div>
-                    <div class="col-6">
-                        <button type="button" class="btn btn-danger btn-block" data-dismiss="modal">Ja, ik ben
-                            zeker
-                        </button>
-                    </div>
-                </div>
+                    <input type="hidden" name="deleteEvent" id="deleteEvent" value="0">
+                </form>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('.delete-event').click(function(){
+            var eventId = $(this).data('event-id');
+            $('#deleteEvent').val(eventId);
+        });
+    });
+</script>
 
 <?php require_once '../layout/footer.php'; ?>
 

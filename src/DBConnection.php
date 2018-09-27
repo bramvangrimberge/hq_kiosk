@@ -133,4 +133,15 @@ class DBConnection
             echo 'SQL exception : ' . $exception->getMessage();
         }
     }
+
+    public function deleteEvent($eventId)
+    {
+        $dbConnection = $this->getConnection();
+        $sql = "delete from event where event_id = " . $eventId;
+        try {
+            $dbConnection->exec($sql);
+        } catch (PDOException $exception) {
+            echo 'SQL exception : ' . $exception->getMessage();
+        }
+    }
 }
